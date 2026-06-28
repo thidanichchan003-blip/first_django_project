@@ -1,0 +1,51 @@
+<div class="p-5 text-center rounded"
+     style="
+     background:linear-gradient(
+     135deg,
+     #F4D6D6,
+     #FFF8F8
+     );
+     ">
+
+    <h1 class="display-4 fw-bold">
+
+    Discover Natural Beauty
+    & Wellness
+
+    </h1>
+
+    <p class="lead">
+
+        Premium products designed
+        to help you look and feel
+        your best every day.
+
+    </p>
+
+    <a class="btn btn-main btn-lg" href="/products/"> Shop Now  </a>
+
+</div>
+
+<hr>
+
+<h2>Featured Products</h2>
+
+<div class="row">
+
+{% for product in products %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            {% if product.image %}
+            <img src="{{ product.image.url }}"
+                class="card-img-top">
+            {% endif %}
+            <div class="card-body">
+                <h5>{{ product.name }}</h5>
+                <p>${{ product.price }}</p>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

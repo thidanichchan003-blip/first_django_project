@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<h2 class="fw-bold mb-4 text-center">
+    Shopping Cart
+</h2>
+
+{% if not cart_items %}
+
+<div class="alert alert-light text-center p-5">
+
+
+<h4>Your cart is empty</h4>
+
+<p>
+    Browse our wellness products and start shopping.
+</p>
+
+<a href="/products/"
+   class="btn btn-main">
+
+    Browse Products
+
+</a>
+
+
+</div>
+
+{% else %}
+
+<div class="card p-4">
+
+
+<table class="table table-hover align-middle">
+
+    <thead>
+
+        <tr>
+
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th></th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    {% for item in cart_items %}
+
+        <tr>
+
+            <td>
+
+                <div class="d-flex align-items-center">
+
+                    {% if item.product.image %}
+
+                    <img src="{{ item.product.image }}"
+                         width="80"
+                         height="80"
+                         class="rounded me-3">
+
+                    {% endif %}
+
+                    <div>
+
+                        <strong>
+                            {{ item.product.name }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </td>
+
+            <td class="text-muted">
+
+                ${{ item.product.price }}
+
+            </td>
+
+        <td>
+
+            <div class="quantity-control">
+
+                <a href="{% url 'decrease_quantity' item.id %}"
+                class="qty-btn">
+
+                    -
+
+                </a>
+
+                <div class="qty-number">
+
+                    {{ item.quantity }}
+
+                </div>
+
+                <a href="{% url 'increase_quantity' item.id %}"
+                class="qty-btn">
+
+                    +
+
+                </a>
+
+            </div>
+
+        </td>
+
+            <td>
+
+                ${{ item.subtotal }}
+
+            </td>
+
+            <td>
+
+                <a
+                    class="btn btn-outline-danger btn-sm"
+                    href="{% url 'remove_from_cart' item.id %}">
+
+                    Remove
+
+                </a>
+
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+
+</div>
+
+<div class="card mt-4 p-4">
+
+
+<h4 class="fw-bold">
+
+    Order Summary
+
+</h4>
+
+<hr>
+
+<h3 class="text-end">
+
+    Total: ${{ total }}
+
+</h3>
+
+<div class="text-end">
+
+    <a class="btn btn-main btn-lg"
+       href="{% url 'checkout' %}">
+
+        Proceed to Checkout
+
+    </a>
+
+</div>
+
+
+</div>
+
+{% endif %}
+
+{% endblock %}

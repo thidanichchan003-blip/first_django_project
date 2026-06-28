@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Checkout</h2>
+
+    <div class="card shadow-sm p-4">
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h5 class="mb-3">Delivery Information</h5>
+
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                {{ form.full_name }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                {{ form.phone }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Delivery Address</label>
+                {{ form.address }}
+            </div>
+
+            <hr>
+
+            <h5>Total: ${{ total }}</h5>
+
+            <hr>
+
+            <h4>ABA Payment</h4>
+
+            <p>Please scan the QR code and complete payment.</p>
+
+            <img src="/media/aba_qr.jpg"
+                alt="ABA QR"
+                width="300"
+                class="img-fluid mb-3">
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Upload Payment Screenshot
+                </label>
+                {{ form.payment_proof }}
+            </div>
+
+            <div class="form-check mb-3">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    required
+                    id="paidCheck">
+
+                <label class="form-check-label" for="paidCheck">
+                    I have completed the payment.
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Submit Order
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

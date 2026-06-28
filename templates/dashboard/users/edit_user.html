@@ -1,0 +1,118 @@
+{% extends 'dashboard/base_admin.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="dashboard-card">
+
+        <h2 class="mb-4">
+            Edit User
+        </h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    value="{{ user.username }}"
+                >
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    value="{{ user.email }}"
+                >
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Role</label>
+
+                <select
+                    name="role"
+                    class="form-select"
+                >
+
+                    <option
+                        value="customer"
+                        {% if profile.role == "customer" %}selected{% endif %}
+                    >
+                        Customer
+                    </option>
+
+                    <option
+                        value="consultant"
+                        {% if profile.role == "consultant" %}selected{% endif %}
+                    >
+                        Consultant
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label>Status</label>
+
+                <select
+                    name="status"
+                    class="form-select"
+                >
+
+                    <option
+                        value="active"
+                        {% if user.is_active %}selected{% endif %}
+                    >
+                        Active
+                    </option>
+
+                    <option
+                        value="inactive"
+                        {% if not user.is_active %}selected{% endif %}
+                    >
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+            <button class="btn btn-success">
+
+                Save Changes
+
+            </button>
+
+            <a
+                href="{% url 'user_list' %}"
+                class="btn btn-secondary"
+            >
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

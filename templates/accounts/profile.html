@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container py-5">
+
+
+<h1 class="mb-4">
+    My Profile
+</h1>
+
+<div class="card shadow-sm border-0 rounded-4 p-4 mb-4">
+
+    <h3 class="mb-4">
+        Account Information
+    </h3>
+
+    <p>
+        <strong>Username:</strong>
+        {{ request.user.username }}
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        {{ request.user.email }}
+    </p>
+
+</div>
+
+{% if not is_consultant and not request.user.is_staff %}
+
+<div class="card shadow-sm border-0 rounded-4 p-4">
+
+    <h3 class="mb-4">
+        My Orders & Delivery Tracking
+    </h3>
+
+    {% if orders %}
+
+    <table class="table align-middle">
+
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Products</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for order in orders %}
+
+            <tr>
+
+                <td>
+                    #{{ order.id }}
+                </td>
+
+                <td>
+
+                    {% for item in order.orderitem_set.all %}
+
+                        <div class="mb-1">
+
+                            {% if item.product.image %}
+
+                            <img
+                                src="{{ item.product.image }}"
+                                width="40"
+                                height="40"
+                                class="rounded me-2">
+
+                            {% endif %}
+
+                            {{ item.product.name }}
+                            × {{ item.quantity }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </td>
+
+                <td>
+                    ${{ order.total_price }}
+                </td>
+
+                <td>
+
+                    {% if order.status == 'Pending' %}
+
+                        <span class="badge bg-warning text-dark">
+                            Pending
+                        </span>
+
+                    {% elif order.status == 'Processing' %}
+
+                        <span class="badge bg-primary">
+                            Processing
+                        </span>
+
+                    {% elif order.status == 'Completed' %}
+
+                        <span class="badge bg-success">
+                            Completed
+                        </span>
+
+                    {% elif order.status == 'Cancelled' %}
+
+                        <span class="badge bg-danger">
+                            Cancelled
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    {{ order.created_at|date:"d M Y" }}
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <p class="text-muted">
+        No orders found.
+    </p>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container py-4">
+
+    <h2 class="mb-4">My Orders</h2>
+
+    {% for order in orders %}
+
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-body">
+
+            <h4 class="mb-3">Order #{{ order.id }}</h4>
+
+            <p><strong>Name:</strong> {{ order.full_name }}</p>
+            <p><strong>Phone:</strong> {{ order.phone }}</p>
+            <p><strong>Address:</strong> {{ order.address }}</p>
+
+            <hr>
+
+            <h5>Products</h5>
+
+            <table class="table table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th width="100">Quantity</th>
+                        <th width="120">Price</th>
+                        <th width="120">Subtotal</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in order.orderitem_set.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.price }}</td>
+                        <td>${{ item.subtotal }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <hr>
+
+            <p><strong>Total:</strong> ${{ order.total_price }}</p>
+            <p><strong>Status:</strong> {{ order.status }}</p>
+            <p><strong>Date:</strong> {{ order.created_at }}</p>
+
+        </div>
+    </div>
+
+    {% empty %}
+
+    <div class="alert alert-info">
+        No orders found.
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

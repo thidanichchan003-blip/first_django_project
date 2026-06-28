@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Consultation Requests</h1>
+
+{% for consultation in consultations %}
+
+<div class="card p-3 mb-3">
+
+    <h5>{{ consultation.user.username }}</h5>
+
+    <p>Status: {{ consultation.status }}</p>
+
+    <a href="{% url 'consultation_chat' consultation.id %}"
+       class="btn btn-main">
+        Open Chat
+    </a>
+
+</div>
+
+{% empty %}
+
+<p>No consultation requests.</p>
+
+
+
+{% endfor %}
+
+{% endblock %}

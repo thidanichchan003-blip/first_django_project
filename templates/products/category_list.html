@@ -1,0 +1,26 @@
+
+
+
+<h1>Category List</h1>
+
+<a href="{% url 'category_create' %}">
+    Add Category
+</a>
+
+<hr>
+
+{% for category in categories %}
+
+<p>{{ category.name }}</p>
+
+<a href="{% url 'category_update' category.id %}">
+    Edit
+</a>
+
+<a href="{% url 'category_delete' category.id %}">
+    Delete
+</a>
+
+<hr>
+
+{% endfor %}

@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>YURÉA Admin Panel</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'dashboard/css/admin.css' %}">
+
+</head>
+
+<body>
+
+    <!-- ================= Sidebar ================= -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            YURÉA
+        </div>
+
+        <a href="{% url 'dashboard' %}">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+        </a>
+
+        <a href="{% url 'user_list' %}">
+            <i class="fas fa-users"></i>
+            Users
+        </a>
+
+        <a href="{% url 'product_list' %}">
+            <i class="fas fa-box"></i>
+            Products
+        </a>
+
+        <a href="{% url 'dashboard_orders' %}">
+            <i class="fas fa-shopping-cart"></i>
+            Orders
+        </a>
+
+        <a href="{% url 'consultation_list' %}">
+            <i class="fas fa-comments"></i>
+            Consultation
+        </a>
+
+        <a href="{% url 'reports' %}">
+            <i class="fas fa-chart-pie"></i>
+            Reports
+        </a>
+
+        <a href="{% url 'settings' %}">
+            <i class="fas fa-cog"></i>
+            Settings
+        </a>
+
+        <a href="{% url 'admin_logout' %}">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </a>
+
+    </div>
+
+    <!-- ================= Main Content ================= -->
+
+    <div class="main-content">
+
+        <!-- ================= Top Navigation ================= -->
+
+        <div class="topbar">
+
+            <!-- Global Search -->
+
+            <form
+                method="GET"
+                action="{% url 'global_search' %}"
+                class="d-flex"
+            >
+
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ request.GET.q }}"
+                    class="form-control search-box"
+                    placeholder="Search..."
+                >
+
+            </form>
+
+            <!-- Right Side -->
+
+            <div class="d-flex align-items-center">
+
+                <!-- Notification -->
+
+                <div class="notification-wrapper me-4">
+
+                    <a href="{% url 'notifications' %}" class="notification-link">
+
+                        <i class="fas fa-bell notification"></i>
+
+                        {% if notification_count > 0 %}
+
+                            <span class="notification-badge">
+
+                                {{ notification_count }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </a>
+
+                </div>
+
+                <!-- Avatar -->
+
+                <img
+                    src="https://ui-avatars.com/api/?name=Admin&background=C68B8B&color=fff"
+                    class="profile-image"
+                    alt="Admin"
+                >
+
+            </div>
+
+        </div>
+
+        <!-- ================= Page Content ================= -->
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

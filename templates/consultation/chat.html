@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="chat-wrapper">
+
+    <h1 class="mb-4">Consultation Chat</h1>
+    <div class="chat-box">
+
+        {% for message in messages %}
+
+            {% if message.sender.username == request.user.username %}
+
+                <div class="message user-message">
+                    <div class="message-content user-bubble">
+                        <strong>{{ message.sender.username }}</strong>
+                        <p>{{ message.message }}</p>
+                        <small>{{ message.created_at|date:"M d, Y g:i A" }}</small>
+                    </div>
+                </div>
+
+            {% else %}
+
+                <div class="message admin-message">
+                    <div class="message-content admin-bubble">
+                        <strong>{{ message.sender.username }}</strong>
+                        <p>{{ message.message }}</p>
+                        <small>{{ message.created_at|date:"M d, Y g:i A" }}</small>
+                    </div>
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+    <form method="POST" class="chat-form">
+        {% csrf_token %}
+
+        <textarea
+            name="message"
+            placeholder="Type your reply..."
+            required></textarea>
+
+        <button type="submit" class="btn btn-main">
+            Send
+        </button>
+    </form>
+
+    </div>
+</div>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const chatBox = document.querySelector(".chat-box");
+
+    if(chatBox){
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+});
+</script>
+
+{% endblock %}
